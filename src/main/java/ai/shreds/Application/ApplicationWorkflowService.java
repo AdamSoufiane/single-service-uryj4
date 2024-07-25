@@ -1,8 +1,9 @@
-package ai.shreds.application; 
+package ai.shreds.Application;
   
- import ai.shreds.shared.SharedApplicationWorkflowRequestDTO; 
- import ai.shreds.shared.SharedApplicationWorkflowResponseDTO; 
- import ai.shreds.domain.DomainWorkflowServicePort; 
+
+ import ai.shreds.Shared.SharedApplicationWorkflowRequestDTO;
+ import ai.shreds.Shared.SharedApplicationWorkflowResponseDTO;
+ import ai.shreds.Domain.DomainWorkflowServicePort;
  import org.springframework.beans.factory.annotation.Autowired; 
  import org.springframework.stereotype.Service; 
  import org.slf4j.Logger; 
@@ -20,7 +21,7 @@ package ai.shreds.application;
      } 
   
      @Override 
-     public SharedApplicationWorkflowResponseDTO createWorkflow(SharedApplicationWorkflowRequestDTO request) { 
+     public SharedApplicationWorkflowResponseDTO createWorkflow(SharedApplicationWorkflowRequestDTO request) {
          logger.info("Starting workflow creation for request: {}", request.getRequestId()); 
          if (request == null || request.getFeatureList() == null || request.getFeatureList().isEmpty()) { 
              throw new IllegalArgumentException("Invalid request data"); 

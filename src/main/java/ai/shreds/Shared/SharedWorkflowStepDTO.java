@@ -1,12 +1,15 @@
-package ai.shreds.shared; 
+package ai.shreds.Shared;
   
- import java.util.List; 
- import lombok.Data; 
+ import java.util.List;
+
+ import lombok.AllArgsConstructor;
+ import lombok.Data;
   
  /** 
   * Data Transfer Object for workflow step details. 
   */ 
- @Data 
+ @Data
+ @AllArgsConstructor
  public class SharedWorkflowStepDTO { 
      /** 
       * The sequence number of the step in the workflow. 

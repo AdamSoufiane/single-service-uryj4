@@ -1,4 +1,4 @@
-package ai.shreds.shared; 
+package ai.shreds.Shared;
   
  import java.util.ArrayList; 
  import java.util.List; 
@@ -12,8 +12,7 @@ package ai.shreds.shared;
   * It contains a list of workflow steps, each represented by SharedWorkflowStepDTO. 
   */ 
  @Getter 
- @Setter 
- @NoArgsConstructor 
+ @Setter
  @AllArgsConstructor 
  public class SharedApplicationWorkflowResponseDTO { 
      private List<SharedWorkflowStepDTO> workflow; 

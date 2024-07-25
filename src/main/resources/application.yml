@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      uri: mongodb://your_username:your_password@localhost:27020/inetpsa
+
+server:
+  port: 7777
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    ai.shreds: DEBUG

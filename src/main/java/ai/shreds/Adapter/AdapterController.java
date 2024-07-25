@@ -1,20 +1,20 @@
-package ai.shreds.adapter; 
+package ai.shreds.Adapter;
   
- import org.springframework.beans.factory.annotation.Autowired; 
+ import ai.shreds.Adapter.exceptions.DatabaseAccessException;
+ import ai.shreds.Adapter.exceptions.InvalidFormatException;
+ import ai.shreds.Adapter.exceptions.MissingFieldException;
+ import ai.shreds.Shared.SharedApplicationWorkflowRequestDTO;
+ import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.ResponseEntity; 
  import org.springframework.web.bind.annotation.PostMapping; 
  import org.springframework.web.bind.annotation.RequestBody; 
  import org.springframework.web.bind.annotation.RequestMapping; 
  import org.springframework.web.bind.annotation.RestController; 
- import ai.shreds.application.ApplicationCreateWorkflowInputPort; 
- import ai.shreds.shared.SharedApplicationWorkflowRequestDTO; 
- import ai.shreds.shared.SharedApplicationWorkflowResponseDTO; 
+ import ai.shreds.Application.ApplicationCreateWorkflowInputPort;
+ import ai.shreds.Shared.SharedApplicationWorkflowResponseDTO;
  import org.slf4j.Logger; 
  import org.slf4j.LoggerFactory; 
- import ai.shreds.util.ResponseEntityBuilder; 
- import ai.shreds.util.CustomValidationException; 
- import ai.shreds.util.MissingFieldException; 
- import ai.shreds.util.InvalidFormatException; 
+ import ai.shreds.util.ResponseEntityBuilder;
   
  @RestController 
  @RequestMapping("/api") 
@@ -29,18 +29,20 @@ package ai.shreds.adapter;
      } 
   
      @PostMapping("/activateServices") 
-     public ResponseEntity<SharedApplicationWorkflowResponseDTO> createWorkflow(@RequestBody SharedApplicationWorkflowRequestDTO request) { 
+     public ResponseEntity<SharedApplicationWorkflowResponseDTO> createWorkflow(@RequestBody SharedApplicationWorkflowRequestDTO request) {
          logger.info("Received activation request with ID: {} and type: {}", request.getRequestId(), request.getType()); 
          try { 
              validateRequestDTO(request); 
              SharedApplicationWorkflowResponseDTO response = workflowService.createWorkflow(request); 
              return ResponseEntityBuilder.ok(response); 
-         } catch (MissingFieldException | InvalidFormatException e) { 
-             logger.error("Validation error: {}", e.getMessage()); 
-             return ResponseEntityBuilder.badRequest(e.getMessage()); 
-         } catch (DatabaseAccessException e) { 
-             logger.error("Database access error during operation on request ID: {}", request.getRequestId(), e); 
-             return ResponseEntityBuilder.serverError(); 
+         } catch (MissingFieldException | InvalidFormatException e) {
+             logger.error("Validation error: {}", e.getMessage());
+             SharedApplicationWorkflowResponseDTO errorResponse = new SharedApplicationWorkflowResponseDTO();
+             return ResponseEntityBuilder.badRequest(errorResponse);
+         } catch (DatabaseAccessException e) {
+             logger.error("Database access error during operation on request ID: {}", request.getRequestId(), e);
+             SharedApplicationWorkflowResponseDTO errorResponse = new SharedApplicationWorkflowResponseDTO();
+             return ResponseEntityBuilder.serverError(errorResponse);
          } 
      } 
   
